@@ -26,5 +26,6 @@ class SftpAutoConfig {
   var digitsPerLevel = 3
 
   @Bean
-  fun sftpService(sftpTemplate: SftpTemplate<SftpSession>) = SftpService(this, sftpTemplate)
+  fun sftpService(sftpTemplate: SftpTemplate<SftpSession>): ISftpService =
+    SftpService(this, sftpTemplate)
 }
