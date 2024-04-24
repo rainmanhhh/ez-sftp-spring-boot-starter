@@ -8,7 +8,7 @@ fun idToPath(id: Long, levels: Int, digitsPerLevel: Int): String {
   val idStr = id.toString() // eg. "23000789"
   val totalLengthWithoutSlash = levels * digitsPerLevel // 4 * 3 = 12 (length of "000023000789")
   val totalLength = totalLengthWithoutSlash + levels // 12 + 4 = 16 (length of "000/023/000/789/")
-  val padLength = levels * digitsPerLevel - idStr.length // number of padding zeros at the start, here is 4
+  val padLength = totalLengthWithoutSlash - idStr.length // number of padding zeros at the start, here is 4
   if (padLength < 0) throw RuntimeException("id is too long for the specified levels and digitsPerLevel: $id")
   val sb = StringBuilder(totalLength)
   var tmp = 0 // temp counter, everytime it reaches digitsPerLevel, add a slash and clear it
