@@ -32,7 +32,7 @@ class SftpService private constructor(
   override fun cd(relativePath: String): SftpService {
     if (relativePath.isEmpty()) return this
     val remoteDir = "$remoteDir/$relativePath".removeSuffix("/")
-    return SftpService(config, remoteDir, config.idLevels, config.digitsPerLevel, sftpTemplate)
+    return SftpService(config, remoteDir, idLevels, digitsPerLevel, sftpTemplate)
   }
 
   override fun cd(id: Long): SftpService {
