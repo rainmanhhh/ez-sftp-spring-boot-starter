@@ -6,6 +6,18 @@ import java.nio.file.Path
 
 interface ISftpService {
   /**
+   * 设置id格式. 默认情况下id格式使用[SftpAutoConfig]中配置的值，可以通过此方法设置自定义值（仅对当前[ISftpService]实例有效）
+   * @param idLevels 层数
+   * @param digitsPerLevel 每层位数
+   */
+  fun setIdFormat(idLevels: Int, digitsPerLevel: Int): ISftpService
+
+  /**
+   * 将id格式设置为（1层，18位），适用于id范围较小的情况
+   */
+  fun setIdFormat() = setIdFormat(1, 18)
+
+  /**
    * 切换工作目录（除非[relativePath]为空，否则会返回一个新的[SftpService]实例）
    * @param relativePath 相对路径。默认为空字符串，表示保持现有目录不变
    */

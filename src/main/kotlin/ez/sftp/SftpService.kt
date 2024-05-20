@@ -13,6 +13,8 @@ class SftpService private constructor(
    * 远程目录。必须以`/`开头，不能以`/`结尾
    */
   private val remoteDir: String,
+  private var idLevels: Int,
+  private var digitsPerLevel: Int,
   private val sftpTemplate: SftpTemplate<SftpSession>
 ) : ISftpService {
   init {
@@ -20,16 +22,21 @@ class SftpService private constructor(
   }
 
   constructor(config: SftpAutoConfig, sftpTemplate: SftpTemplate<SftpSession>) :
-    this(config, config.remoteDir.removeSuffix("/"), sftpTemplate)
+    this(config, config.remoteDir.removeSuffix("/"), config.idLevels, config.digitsPerLevel, sftpTemplate)
+
+  override fun setIdFormat(idLevels: Int, digitsPerLevel: Int): ISftpService = apply {
+    this.idLevels = idLevels
+    this.digitsPerLevel = digitsPerLevel
+  }
 
   override fun cd(relativePath: String): SftpService {
     if (relativePath.isEmpty()) return this
     val remoteDir = "$remoteDir/$relativePath".removeSuffix("/")
-    return SftpService(config, remoteDir, sftpTemplate)
+    return SftpService(config, remoteDir, config.idLevels, config.digitsPerLevel, sftpTemplate)
   }
 
   override fun cd(id: Long): SftpService {
-    val relativePath = idToPath(id, config.idLevels, config.digitsPerLevel)
+    val relativePath = idToPath(id, idLevels, digitsPerLevel)
     return cd(relativePath)
   }
 

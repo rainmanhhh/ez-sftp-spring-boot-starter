@@ -17,11 +17,15 @@ class SftpAutoConfig {
 
   /**
    * when building working dir by data id, how many levels to use.
+   * - notice: this is a common setting, if a sftp service has different requirements,
+   *   it should override by [ISftpService.setIdFormat]
    */
   var idLevels = 4
 
   /**
    * when building working dir by data id, maximum sub dir name length of each level
+   * - notice: this is a common setting, if a sftp service has different requirements,
+   *   it should override by [ISftpService.setIdFormat]
    */
   var digitsPerLevel = 3
 
